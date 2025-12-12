@@ -119,6 +119,18 @@
 
         .copy-button {
             right: 45px;
+
+            /*icons from chatgpt and stackoverflow*/
+            /*background-image: url("data:image/svg+xml,%3Csvg aria-hidden='true' class='svg-icon iconCopy mr4' width='17' height='18' viewBox='0 0 17 18' xmlns='http://www.w3.org/2000/svg'%3E%3Cpath d='M5 6c0-1.09.91-2 2-2h4.5L15 7.5V15c0 1.09-.91 2-2 2H7c-1.09 0-2-.91-2-2zm6-1.25V8h3.25z'/%3E%3Cpath d='M10 1a2 2 0 0 1 2 2H6a2 2 0 0 0-2 2v9a2 2 0 0 1-2-2V4a3 3 0 0 1 3-3z' opacity='.4'/%3E%3C/svg%3E");*/
+            background-image: url("data:image/svg+xml,%3Csvg aria-hidden='true' height='16' viewBox='0 0 16 16' width='16' xmlns='http://www.w3.org/2000/svg'%3E%3Cpath d='M0 6.75C0 5.784.784 5 1.75 5h1.5a.75.75 0 0 1 0 1.5h-1.5a.25.25 0 0 0-.25.25v7.5c0 .138.112.25.25.25h7.5a.25.25 0 0 0 .25-.25v-1.5a.75.75 0 0 1 1.5 0v1.5A1.75 1.75 0 0 1 9.25 16h-7.5A1.75 1.75 0 0 1 0 14.25Z'/%3E%3Cpath d='M5 1.75C5 .784 5.784 0 6.75 0h7.5C15.216 0 16 .784 16 1.75v7.5A1.75 1.75 0 0 1 14.25 11h-7.5A1.75 1.75 0 0 1 5 9.25Zm1.75-.25a.25.25 0 0 0-.25.25v7.5c0 .138.112.25.25.25h7.5a.25.25 0 0 0 .25-.25v-7.5a.25.25 0 0 0-.25-.25Z'/%3E%3C/svg%3E");
+            background-size: 18px;
+            background-repeat: no-repeat;
+            background-position-x: center;
+            background-position-y: center;
+        }
+
+        .copy-button-clicked {
+            background-image: url("data:image/svg+xml,%3Csvg aria-hidden='true' height='16' viewBox='0 0 16 16' version='1.1' width='16' data-view-component='true' class='octicon octicon-check js-clipboard-check-icon color-fg-success d-none' xmlns='http://www.w3.org/2000/svg'%3E%3Cpath d='M13.78 4.22a.75.75 0 0 1 0 1.06l-7.25 7.25a.75.75 0 0 1-1.06 0L2.22 9.28a.751.751 0 0 1 .018-1.042.751.751 0 0 1 1.042-.018L6 10.94l6.72-6.72a.75.75 0 0 1 1.06 0Z'/%3E%3C/svg%3E");
         }
 
         .expcol-button {
@@ -128,24 +140,25 @@
         .askchat-button {
             right: 10px;
 
-            background-color: rgba(0, 0, 0, 0.1);
             background-image: url("https://cdn.oaistatic.com/assets/favicon-l4nq08hd.svg");
-            background-size: 30px;
+            background-size: 25px;
+            background-repeat: no-repeat;
+            background-position-x: center;
+            background-position-y: center;
         }
 
 
         .copy-button:hover {
-            background: rgba(0, 0, 0, 0.2);
+            background-color: rgba(0, 0, 0, 0.2);
         }
 
         .expcol-button:hover {
-            background: rgba(0, 0, 0, 0.2);
+            background-color: rgba(0, 0, 0, 0.2);
         }
 
         .askchat-button:hover {
-            background: rgba(0, 0, 0, 0.2);
-            background-image: url("https://cdn.oaistatic.com/assets/favicon-l4nq08hd.svg");
-            background-size: 30px;
+            background-color: rgba(0, 0, 0, 0.2);
+
         }
 
         button {
@@ -217,7 +230,7 @@
             button.classList.add("copy-button");
             button.onclick = copyMe;
             button.title = "Kopieer naar Klembord";
-            button.innerText = "📋";
+            //button.innerText = "📋";
 
             return button;
         }
@@ -313,6 +326,12 @@
 
 
         function copyText(e) {
+            /*laat even een ok vinkje zien zodat duidelijk is dat de copy gelukt is*/
+            e.classList.add("copy-button-clicked");
+            setTimeout(() => {
+                 e.classList.remove("copy-button-clicked");
+            }, 1000);
+
             // Get the text from the input field
             let text = e.parentNode.getElementsByTagName('code')[0].innerText;
 
