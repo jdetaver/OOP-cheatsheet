@@ -1,0 +1,780 @@
+<!DOCTYPE html>
+<html lang="nl">
+
+<head>
+    <meta charset="UTF-8">
+    <title>OOP Concepten Samenvatting</title>
+
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/11.11.1/styles/vs.css">
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/11.11.1/highlight.min.js"></script>
+
+
+    <style>
+        /*
+        normalize css voor lijsten
+        */
+        ul,
+        ol {
+            margin: 0;
+            padding: 10px;
+            list-style: numbers;
+        }
+
+        li {
+            margin: 0;
+            padding: 0;
+            margin-left: 20px;
+        }
+
+        li::marker {
+            color: #555;
+            margin-top: 25px;
+            display: block;
+            font-size: 1.17em;
+            font-weight: bold;
+            margin-block-start: 1em;
+            margin-block-end: 1em;
+        }
+
+
+        /*
+        start mijn layout
+        */
+        body {
+            font-family: Arial, sans-serif;
+            line-height: 1.6;
+            margin: 20px;
+        }
+
+        h2 {
+            color: #333;
+            border-bottom: 2px solid #ccc;
+            padding-bottom: 5px;
+        }
+
+        h3 {
+            color: #555;
+            margin-top: 25px;
+            display: block;
+            font-size: 1.17em;
+            font-weight: bold;
+            margin-block-start: 1em;
+            margin-block-end: 1em;
+        }
+
+        pre {
+            background-color: #f4f4f4;
+            padding: 15px;
+            border-left: 5px solid #007bff;
+            overflow-x: auto;
+            white-space: pre-wrap;
+        }
+
+        .hljs {
+            background: #f4f4f4;
+        }
+
+        strong {
+            font-weight: bold;
+        }
+
+        p {
+            margin-bottom: 15px;
+        }
+
+        .code-content {
+            /* PAS DEZE LIJN AAN: Verhoog de hoogte voor de ingeklapte staat */
+            max-height: 40px;
+            /* Start met een kleine hoogte (bijv. 30px) */
+            opacity: 0.5;
+            /* Maak het half-transparant om aan te geven dat het ingeklapt is */
+            overflow: hidden;
+            /* Zorgt ervoor dat de rest van de code verborgen is */
+
+            /* De rest van de transitie-eigenschappen blijven hetzelfde */
+            transition: max-height 0.5s ease-in-out, opacity 0.5s ease-in-out;
+            padding: 0 15px;
+        }
+
+        .code-content.is-open {
+            /* Open staat: Bepaal een zeer grote hoogte die de inhoud garandeert */
+            max-height: 1500px;
+            /* Voldoende grote hoogte om de volledige code te tonen */
+            opacity: 1;
+            /* Volledig zichtbaar */
+            padding: 0 15px;
+            /* Voeg padding toe voor een nette look */
+        }
+
+        pre {
+            position: relative;
+            background-color: #f4f4f4;
+            border-left: 5px solid #007bff;
+            overflow-x: auto;
+            border-radius: 4px;
+            margin: 0;
+        }
+
+
+
+        .copy-button {
+            right: 45px;
+        }
+
+        .expcol-button {
+            right: 80px;
+        }
+
+        .askchat-button {
+            right: 10px;
+
+            background-color: rgba(0, 0, 0, 0.1);
+            background-image: url("https://cdn.oaistatic.com/assets/favicon-l4nq08hd.svg");
+            background-size: 30px;
+        }
+
+
+        .copy-button:hover {
+            background: rgba(0, 0, 0, 0.2);
+        }
+
+        .expcol-button:hover {
+            background: rgba(0, 0, 0, 0.2);
+        }
+
+        .askchat-button:hover {
+            background: rgba(0, 0, 0, 0.2);
+            background-image: url("https://cdn.oaistatic.com/assets/favicon-l4nq08hd.svg");
+            background-size: 30px;
+        }
+
+        button {
+            position: absolute;
+            top: 5px;
+
+            border: none;
+            cursor: pointer;
+
+            background: rgba(0, 0, 0, 0.1);
+
+            height: 30px;
+            width: 30px;
+
+            border-radius: 4px;
+            border-radius: 4px;
+            font-size: 14px;
+
+            z-index: 10;
+
+            transition: background 0.2s;
+        }
+    </style>
+
+
+
+
+    <script>
+        window.onload = function () {
+            //code kleuren
+            var codeblocks = document.getElementsByTagName('code');
+            for (const codeblock of codeblocks) {
+                hljs.highlightBlock(codeblock);
+
+            }
+
+            //elke pre uitbreiden met chat-knop
+            var pres = document.getElementsByTagName('pre');
+            for (const pre of pres) {
+                pre.appendChild(getExpcolButton(pre));
+                pre.appendChild(getCopieerButton(pre));
+                pre.appendChild(getChatButton(pre));
+            }
+
+            //de default in te klappen codes inklappen
+            var default_collapsed = document.querySelectorAll('.default_collapsed');
+            for (const defColl of default_collapsed) {
+                toggleCode(defColl.getElementsByClassName("expcol-button")[0]);
+            }
+
+        };
+
+        function getChatButton(preElement) {
+            let chatbutton = document.createElement("button");
+            chatbutton.classList.add("askchat-button");
+            chatbutton.title = "Vraag ChatGpt om extra uitleg";
+
+            let a_chatbutton = document.createElement("a");
+            a_chatbutton.href = askChatLink(preElement);
+            a_chatbutton.target = "_blank";
+            a_chatbutton.appendChild(chatbutton);
+
+            return a_chatbutton;
+        }
+
+
+        function getCopieerButton() {
+            let button = document.createElement("button");
+            button.classList.add("copy-button");
+            button.onclick = copyMe;
+            button.title = "Kopieer naar Klembord";
+            button.innerText = "📋";
+
+            return button;
+        }
+
+        function getExpcolButton(preElement) {
+            let button = document.createElement("button");
+            button.classList.add("expcol-button");
+            button.onclick = toggleCodeMe;
+            button.title = "Klap open";
+            button.innerText = "▼";
+
+            return button;
+        }
+
+        function toggleCodeMe() {
+            toggleCode(this);
+        }
+
+        function copyMe() {
+            copyText(this);
+        }
+
+        function askChatLink(pre) {
+            let link = "https://chatgpt.com/?oai-dm=1&prompt=VELDVRAAG";
+            let vraag = "Ik ben een startende cursist object georiënteerd programmeren en bij het onderwerp 'VELDONDERWERP' staat deze uitleg 'VELDUITLEG'. Ik kreeg ook dit codevoorbeeld van mijn instructeur : VELDCODEVOORBEELD . Geef me meer hier extra uitleg over.";
+
+            let VELDONDERWERP = pre.parentNode.getElementsByTagName("h3")[0].innerText;
+            let VELDCODEVOORBEELD = pre.getElementsByTagName("code")[0].innerText;
+
+            let VELDUITLEG = "";
+            for (const paragraaf of pre.parentNode.getElementsByTagName("p")) {
+                VELDUITLEG += paragraaf.innerText + " ";
+            }
+
+            vraag = vraag.replace("VELDONDERWERP", VELDONDERWERP);
+            vraag = vraag.replace("VELDUITLEG", VELDUITLEG);
+            vraag = vraag.replace("VELDCODEVOORBEELD", VELDCODEVOORBEELD);
+
+            vraag = stringToUrl(vraag);
+
+            link = link.replace("VELDVRAAG", vraag);
+
+
+            return link;
+        }
+
+        function htmlEntities(str) {
+            return String(str).replace(/&/g, '&amp;').replace(/</g, '&lt;').replace(/>/g, '&gt;').replace(/"/g, '&quot;');
+        }
+
+        function stringToUrl(str) {
+            str = String(str);
+            const replacements = {
+                '&': '%26',
+                '<': '%3C',
+                '>': '%3E',
+                '\\': '%5C',
+                '#': '%23',
+                '"': '%22',   // double quote
+                "'": '%27',   // single quote
+                '/': '%2F',   // forward slash
+                '?': '%3F',
+                ':': '%3A',
+                ';': '%3B',
+                '=': '%3D',
+                '+': '%2B',
+                ' ': '%20',    // space
+                '%': '%25',    // percent
+                '@': '%40',
+                '$': '%24',
+                ',': '%2C',
+                '`': '%60',
+                '{': '%7B',
+                '}': '%7D',
+                '|': '%7C',
+                '^': '%5E',
+                '~': '%7E',
+                '[': '%5B',
+                ']': '%5D'
+            };
+
+            return str.split('').map(char => replacements[char] || char).join('');
+        }
+
+        function escapeAllToHtmlEntities(str) {
+            let result = '';
+            for (let i = 0; i < str.length; i++) {
+                const code = str.charCodeAt(i); // get Unicode code of the character
+                result += `&#${code};`;          // convert to HTML numeric entity
+            }
+            return result;
+        }
+
+
+        function copyText(e) {
+            // Get the text from the input field
+            let text = e.parentNode.getElementsByTagName('code')[0].innerText;
+
+            let feedback = document.getElementById("feedbackMessage");
+
+            // Use the Clipboard API to write the text
+            navigator.clipboard.writeText(text).then(() => {
+                // Success feedback
+                //feedback.textContent = "Copied to clipboard!";
+                /*setTimeout(() => {
+                  feedback.textContent = "";
+                }, 2000); */// Clear message after 2 seconds
+            }).catch(err => {
+                // Error handling
+                console.error('Could not copy text: ', err);
+                //feedback.textContent = "Failed to copy text.";
+            });
+        }
+
+
+        function toggleCode(e) {
+            let pretag = e.parentNode;
+
+            // Controleer of de klasse 'is-open' aanwezig is
+            if (pretag.classList.contains('is-open')) {
+                // Als de klasse er is, verwijder deze (sluiten)
+                pretag.classList.remove('is-open');
+                e.textContent = "►";
+            } else {
+                // Als de klasse er niet is, voeg deze toe (openen)
+                pretag.classList.add('is-open');
+                e.textContent = "▼";
+            }
+        }
+    </script>
+</head>
+
+<body>
+    <h1>Object Georiënteerd Programmeren: De Basisconcepten</h1>
+
+    <p>Dit overzicht bespreekt de kernprincipes van OOP met een eenvoudige uitleg en een codevoorbeeld in JavaScript.
+    </p>
+
+    <!-- 
+    overzicht van de structuur : 
+    <ol>
+        ...
+        <li>
+            <h3>titel</h3>
+            <p>eenvoudige beschrijving</p>
+            <pre class='code-content is-open'>
+                <code class="language-javascript"></code>
+                <button class="expcol-button" onclick='toggleCode(this);' title="Klap open">▼</button>
+                <button class="copy-button" onclick="copyText(this)" title="Kopieer naar Klembord">&#x1F4CB;</button>
+                <a>
+                    <button class="askchat-button" title="Vraag ChatGpt om extra uitleg"></button>
+                </a>
+            </pre> 
+        </li>
+        ...
+    </ol>
+
+    het kan ook voorkomen dat er meerdere blokken onder 1 titel staan
+
+    <ol>
+        ...
+        <li>
+            <h3>titel</h3>
+            <p>eenvoudige beschrijving</p>
+            <pre class='code-content is-open'>
+                <code class="language-javascript"></code>
+                <button class="expcol-button" onclick='toggleCode(this);' title="Klap open">▼</button>
+                <button class="copy-button" onclick="copyText(this)" title="Kopieer naar Klembord">&#x1F4CB;</button>
+                <a>
+                    <button class="askchat-button" title="Vraag ChatGpt om extra uitleg"></button>
+                </a>
+            </pre> 
+
+            <p>uitdieping</p>
+            <pre class='code-content is-open default_collapsed'>
+                <code class="language-javascript"></code>
+                <button class="expcol-button" onclick='toggleCode(this);' title="Klap open">▼</button>
+                <button class="copy-button" onclick="copyText(this)" title="Kopieer naar Klembord">&#x1F4CB;</button>
+                <a>
+                    <button class="askchat-button" title="Vraag ChatGpt om extra uitleg"></button>
+                </a>
+            </pre> 
+        </li>
+        ...
+    </ol>
+
+    -->
+
+    <ol>
+        <li>
+            <h3>Class en Object</h3>
+            <p><strong>Eenvoudige Beschrijving:</strong> Een <strong>Class</strong> is het algemene plan of de
+                blauwdruk.
+                Het
+                definieert wat voor soort attributen (eigenschappen) en methods (handelingen) een ding zal hebben. Een
+                <strong>Object</strong> is een tastbaar exemplaar van die blauwdruk. Je maakt een object met het
+                trefwoord
+                <code class="language-javascript">new</code>.
+            </p>
+
+            <pre class='code-content is-open'><code class="language-javascript">class Auto { // De Blauwdruk (Class)
+    constructor(kleur) {
+        this.kleur = kleur; // Attribuut
+    }
+    rijden() { // Method
+        return `De ${this.kleur}e auto rijdt.`;
+    }
+}
+
+const mijnAuto = new Auto("rood"); // Het exemplaar (Object)
+console.log(mijnAuto.rijden()); // Output: De rode auto rijdt.</code></pre>
+
+        </li>
+        <li>
+            <h3>Attribuut en Method</h3>
+            <p><strong>Eenvoudige Beschrijving:</strong> Een <strong>Attribuut</strong> is een eigenschap of kenmerk van
+                een
+                object (bijvoorbeeld kleur of naam). Een <strong>Method</strong> is een actie of handeling die het
+                object
+                kan
+                uitvoeren (bijvoorbeeld starten of stoppen).</p>
+
+
+            <pre class='code-content is-open'><code class="language-javascript">class Lamp {
+    #isAan = false; // Attribuut: toestand van de lamp
+
+    zetAan() { // Method: handeling om de toestand te veranderen
+        this.#isAan = true;
+    }
+    getStatus() {
+        return this.#isAan ? "Aan" : "Uit";
+    }
+}
+
+const halLamp = new Lamp();
+halLamp.zetAan();
+console.log(halLamp.getStatus()); // Output: Aan</code></pre>
+
+
+            <p><strong>Uitbreiding :</strong>
+                De waarde van een attributen kan je uitlezen en wijzigen
+                op 2 manieren : getter/setter-methods (zoals het voorbeeld hierboven) of <code>get</code>
+                en <code>set</code> sleutelwoorden. Deze 2de methode noemen we <strong>accessor properties</strong>.
+            </p>
+
+            <pre class='code-content is-open default_collapsed'><code class="language-javascript">class Thermometer {
+    // 1. Het private (interne) attribuut
+    #temperatuur = 0; 
+
+    // 2. Getter: Wordt uitgevoerd wanneer je 'mijnThermometer.celsius' leest.
+    get celsius() {
+        console.log("--> Getter uitgevoerd: waarde wordt gelezen.");
+        return this.#temperatuur;
+    }
+
+    // 3. Setter: Wordt uitgevoerd wanneer je 'mijnThermometer.celsius = 25' schrijft.
+    set celsius(nieuweTemperatuur) {
+        if (nieuweTemperatuur < -273) {
+            console.error("Fout: Temperatuur kan niet onder het absolute nulpunt komen.");
+            return; // Stopt de toewijzing
+        }
+        console.log("--> Setter uitgevoerd: waarde wordt gevalideerd en gewijzigd.");
+        this.#temperatuur = nieuweTemperatuur;
+    }
+
+    // Een berekende getter is ook mogelijk
+    get fahrenheit() {
+        return (this.#temperatuur * 9/5) + 32;
+    }
+}
+
+const mijnThermometer = new Thermometer();
+
+// Gebruik als een normale property (roept de SETTER op)
+mijnThermometer.celsius = 20; 
+
+// Gebruik als een normale property (roept de GETTER op)
+console.log(`De temperatuur is nu ${mijnThermometer.celsius}°C.`);
+
+// De berekende property (roept de GETTER op)
+console.log(`Dat is ${mijnThermometer.fahrenheit}°F.`); 
+
+// Test de validatie (roept de SETTER op, maar deze mislukt)
+mijnThermometer.celsius = -300; </code></pre>
+
+        </li>
+        <li>
+            <h3>Encapsulation (Inkapseling)</h3>
+            <p><strong>Eenvoudige Beschrijving:</strong> Encapsulation beschermt de interne data van een object door de
+                attributen "private" te maken (<code class="language-javascript">#</code> in JavaScript). Dit zorgt
+                ervoor
+                dat
+                de attributen niet direct van
+                buitenaf aangepast kunnen worden, wat foutieve waarden voorkomt. Je gebruikt methods om de data
+                gecontroleerd te
+                lezen of te wijzigen.</p>
+
+            <pre class='code-content is-open'><code class="language-javascript">class KlantAccount {
+    #saldo = 0; // Private Attribuut (#)
+
+    stort(bedrag) {
+        if (bedrag > 0) { // Gecontroleerde toegang
+            this.#saldo += bedrag;
+        }
+    }
+
+    getSaldo() { // Public Method voor lezen
+        return this.#saldo;
+    }
+}
+
+const account = new KlantAccount();
+// account.#saldo = 1000; // Dit veroorzaakt een fout
+account.stort(200);
+console.log(account.getSaldo()); // Output: 200 </code></pre>
+
+        </li>
+        <li>
+            <h3>Constructor</h3>
+            <p><strong>Eenvoudige Beschrijving:</strong> De constructor is de speciale method die automatisch wordt
+                uitgevoerd
+                wanneer een object wordt aangemaakt (bij <code class="language-javascript">new</code>). Het wordt
+                gebruikt
+                om de
+                beginwaarden (attributen)
+                van het nieuwe object in te stellen.</p>
+            <pre class='code-content is-open'><code class="language-javascript">class Product {
+    #naam; 
+
+    // Constructor initialiseert het attribuut bij het aanmaken
+    constructor(productNaam) {
+        this.#naam = productNaam;
+        console.log(`Product ${this.#naam} is aangemaakt.`);
+    }
+
+    getNaam() {
+        return this.#naam;
+    }
+}
+
+const melk = new Product("Melk"); // De constructor wordt nu uitgevoerd
+// Output: Product Melk is aangemaakt. </code></pre>
+
+        </li>
+        <li>
+            <h3>Composition (Compositie)</h3>
+            <p><strong>Eenvoudige Beschrijving:</strong> Composition is de <strong>"heeft een"</strong> relatie tussen
+                classes.
+                Een class
+                gebruikt een object van een andere class als een van zijn eigen attributen. Bijvoorbeeld: een auto heeft
+                een motor.</p>
+            <pre class='code-content is-open'><code class="language-javascript">class Motor {
+    start() {
+        return "Motor gestart.";
+    }
+}
+
+class AutoMetMotor {
+    constructor() {
+        // Compositie: Auto 'heeft een' Motor object als attribuut
+        this.motor = new Motor(); 
+    }
+
+    rij() {
+        return "Auto rijdt. " + this.motor.start();
+    }
+}
+
+const mijnWagen = new AutoMetMotor();
+console.log(mijnWagen.rij()); // Output: Auto rijdt. Motor gestart. </code></pre>
+
+        </li>
+        <li>
+            <h3>Inheritance (Overerving)</h3>
+            <p><strong>Eenvoudige Beschrijving:</strong> Inheritance is de <strong>"is een"</strong> relatie. Een nieuwe
+                class
+                (Derived Class)
+                neemt alle attributen en methods van een bestaande class (Base Class) over met het trefwoord
+                <code class="language-javascript">extends</code>. Dit bevordert herbruikbaarheid. De constructor van de
+                Base
+                Class roep je aan met
+                <code class="language-javascript">super()</code>.
+            </p>
+            <pre class='code-content is-open'><code class="language-javascript">class Vervoermiddel { // Base Class
+    verplaats() {
+        return "Het middel beweegt.";
+    }
+}
+
+class Fiets extends Vervoermiddel { // Derived Class (is een Vervoermiddel)
+    bel() {
+        return "Ring ring!";
+    }
+}
+
+const stadsfiets = new Fiets();
+console.log(stadsfiets.verplaats()); // Geërfde method
+console.log(stadsfiets.bel());      // Eigen method
+// Output: Het middel beweegt. </code></pre>
+
+            wat uitgebreider :
+
+            <pre class='code-content is-open default_collapsed'><code class="language-javascript">// --- 1. Base Class (Vervoermiddel) ---
+class Vervoermiddel {
+    // Gemeenschappelijke private attributen
+    #merk;
+    #maxSnelheid;
+
+    constructor(merk, maxSnelheid) {
+        // Initialiseert de geërfde attributen
+        this.#merk = merk;
+        this.#maxSnelheid = maxSnelheid;
+    }
+
+    verplaats() {
+        // Gemeenschappelijke method
+        return `Het ${this.#merk} verplaatst zich.`;
+    }
+}
+
+// --- 2. Derived Class (Fiets) ---
+// Gebruikt 'extends' om de attributen en methods van Vervoermiddel over te erven
+class Fiets extends Vervoermiddel {
+    #aantalVersnellingen; // Extra attribuut, uniek voor Fiets
+
+    constructor(merk, maxSnelheid, aantalVersnellingen) {
+        // WERKING VAN super():
+        // 1. super() MOET als eerste worden aangeroepen in de constructor van de Derived Class.
+        // 2. Het roept de constructor van Vervoermiddel op en geeft de parameters 'merk' en 'maxSnelheid' door.
+        // 3. Dit initialiseert de geërfde attributen in de Base Class.
+        super(merk, maxSnelheid); 
+        
+        // 4. Hierna wordt het unieke attribuut van de Fiets class geïnitialiseerd.
+        this.#aantalVersnellingen = aantalVersnellingen;
+    }
+
+    bel() {
+        // Unieke method voor Fiets
+        return "Ring ring! De fiets belde.";
+    }
+
+    getInfo() {
+        return `Dit is een ${this.constructor.name} van merk ${this.verplaats().split(' ')[1]}. Aantal versnellingen: ${this.#aantalVersnellingen}.`;
+    }
+}
+
+// --- 3. Gebruik van het geërfde object ---
+const stadsfiets = new Fiets("Gazelle", 35, 7);
+
+// Gebruikt de geërfde method van de Base Class (Vervoermiddel)
+console.log(stadsfiets.verplaats()); 
+
+// Gebruikt de unieke method van de Derived Class (Fiets)
+console.log(stadsfiets.bel()); 
+
+// Toont geërfde en unieke attributen
+console.log(stadsfiets.getInfo());
+
+/*
+Output:
+Het Gazelle verplaatst zich.
+Ring ring! De fiets belde.
+Dit is een Fiets van merk Gazelle. Aantal versnellingen: 7.
+*/
+	 </code></pre>
+
+
+        </li>
+        <li>
+            <h3>Method Overriding (Method Overschrijven)</h3>
+            <p><strong>Eenvoudige Beschrijving:</strong> Dit is het aanpassen van een geërfde method in de Derived
+                Class. U
+                geeft de method een andere of uitgebreide functionaliteit. U kunt de oorspronkelijke method van de Base
+                Class
+                oproepen binnen de nieuwe method met <code class="language-javascript">super.methodNaam()</code>.</p>
+            <pre class='code-content is-open'><code class="language-javascript">class Dier {
+    geluid() {
+        return "Maakt een basisgeluid.";
+    }
+}
+
+class Kat extends Dier {
+    // Overschrijven van de geluid method
+    geluid() {
+        // Roep de Base Class method op en voeg extra info toe
+        return `${super.geluid()} Maar de Kat zegt 'Miau'.`;
+    }
+}
+
+const poes = new Kat();
+console.log(poes.geluid()); 
+// Output: Maakt een basisgeluid. Maar de Kat zegt 'Miau'. </code></pre>
+
+        </li>
+        <li>
+            <h3>Polymorfisme</h3>
+            <p><strong>Eenvoudige Beschrijving:</strong> Polymorfisme betekent "vele vormen". Het verwijst naar het feit
+                dat
+                eenzelfde method (met dezelfde naam) in verschillende classes bestaat, maar telkens een andere actie
+                uitvoert.
+                Dit is handig wanneer je objecten van verschillende types in een lijst behandelt.</p>
+            <pre class='code-content is-open'><code class="language-javascript">class Figuur {
+    teken() {
+        return "Een figuur wordt getekend.";
+    }
+}
+
+class Cirkel extends Figuur {
+    teken() {
+        return "Een ronde vorm wordt getekend.";
+    }
+}
+
+class Vierkant extends Figuur {
+    teken() {
+        return "Een vierkant met rechte hoeken wordt getekend.";
+    }
+}
+
+const objecten = [new Cirkel(), new Vierkant()];
+
+// Polymorfisme: dezelfde oproep 'teken()' heeft verschillende resultaten
+for (const obj of objecten) {
+    console.log(obj.teken());
+}
+// Output: Een ronde vorm wordt getekend.
+// Output: Een vierkant met rechte hoeken wordt getekend. </code></pre>
+
+        </li>
+        <li>
+            <h3>Static</h3>
+            <p><strong>Eenvoudige Beschrijving:</strong> Static attributen of methods zijn Class-eigenschappen, en dus
+                geen
+                object-eigenschappen. Alle objecten delen dezelfde static waarde. Je roept een static method aan via de
+                naam
+                van de Class, niet via een object.</p>
+            <pre class='code-content is-open'><code class="language-javascript">class Teller {
+    static #gemaakteObjecten = 0; // Static attribuut
+
+    constructor() {
+        // Verhoog de static waarde via de Classnaam
+        Teller.#gemaakteObjecten++; 
+    }
+
+    static getTotaalAantalTellers() { // Static method
+        return Teller.#gemaakteObjecten;
+    }
+}
+
+let item1 = new Teller();
+let item2 = new Teller();
+
+// Roep static method op via Classnaam
+console.log(Teller.getTotaalAantalTellers()); // Output: 2 </code></pre>
+
+        </li>
+    </ol>
+</body>
+
+</html>
