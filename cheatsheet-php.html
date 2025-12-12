@@ -3,8 +3,8 @@
 
 <head>
     <meta charset="UTF-8">
-    <title>OOP Concepten Samenvatting</title>
-    <link rel="icon" type="image/svg+xml" href="data:image/svg+xml,%3Csvg%20xmlns='http://www.w3.org/2000/svg'%20viewBox='0%200%20256%20256'%20preserveAspectRatio='xMinYMin%20meet'%3E%3Cpath%20d='M0%200h256v256H0V0z'%20fill='%23F7DF1E'/%3E%3Cpath%20d='M67.312%20213.932l19.59-11.856c3.78%206.701%207.218%2012.371%2015.465%2012.371%207.905%200%2012.89-3.092%2012.89-15.12v-81.798h24.057v82.138c0%2024.917-14.606%2036.259-35.916%2036.259-19.245%200-30.416-9.967-36.087-21.996M152.381%20211.354l19.588-11.341c5.157%208.421%2011.859%2014.607%2023.715%2014.607%209.969%200%2016.325-4.984%2016.325-11.858%200-8.248-6.53-11.17-17.528-15.98l-6.013-2.58c-17.357-7.387-28.87-16.667-28.87-36.257%200-18.044%2013.747-31.792%2035.228-31.792%2015.294%200%2026.292%205.328%2034.196%2019.247L210.29%20147.43c-4.125-7.389-8.591-10.31-15.465-10.31-7.046%200-11.514%204.468-11.514%2010.31%200%207.217%204.468%2010.14%2014.778%2014.608l6.014%202.577c20.45%208.765%2031.963%2017.7%2031.963%2037.804%200%2021.654-17.012%2033.51-39.867%2033.51-22.339%200-36.774-10.654-43.819-24.574'/%3E%3C/svg%3E">
+    <title>OOP Concepten Samenvatting (PHP 8)</title>
+    <link rel="icon" type="image/svg+xml" sizes="any" href="https://www.php.net/favicon.svg?v=2">
 
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/11.11.1/styles/vs.css">
     <script src="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/11.11.1/highlight.min.js"></script>
@@ -14,11 +14,17 @@
         /*
         normalize css voor lijsten
         */
-        ul,
+
         ol {
             margin: 0;
             padding: 10px;
             list-style: numbers;
+        }
+
+        ul {
+            margin: 0;
+            padding: 10px;
+            list-style: circle;
         }
 
         li {
@@ -35,6 +41,10 @@
             font-weight: bold;
             margin-block-start: 1em;
             margin-block-end: 1em;
+        }
+
+        .nosymbol {
+            list-style: none;
         }
 
 
@@ -330,7 +340,7 @@
             /*laat even een ok vinkje zien zodat duidelijk is dat de copy gelukt is*/
             e.classList.add("copy-button-clicked");
             setTimeout(() => {
-                 e.classList.remove("copy-button-clicked");
+                e.classList.remove("copy-button-clicked");
             }, 1000);
 
             // Get the text from the input field
@@ -371,60 +381,10 @@
 </head>
 
 <body>
-    <h1>Object Georiënteerd Programmeren: De Basisconcepten</h1>
+    <h1>Object Georiënteerd Programmeren: De Basisconcepten (PHP 8)</h1>
 
-    <p>Dit overzicht bespreekt de kernprincipes van OOP met een eenvoudige uitleg en een codevoorbeeld in JavaScript.
+    <p>Dit overzicht bespreekt de kernprincipes van OOP met een eenvoudige uitleg en een codevoorbeeld in PHP 8.
     </p>
-
-    <!-- 
-    overzicht van de structuur : 
-    <ol>
-        ...
-        <li>
-            <h3>titel</h3>
-            <p>eenvoudige beschrijving</p>
-            <pre class='code-content is-open'>
-                <code class="language-javascript"></code>
-                <button class="expcol-button" onclick='toggleCode(this);' title="Klap open">▼</button>
-                <button class="copy-button" onclick="copyText(this)" title="Kopieer naar Klembord">&#x1F4CB;</button>
-                <a>
-                    <button class="askchat-button" title="Vraag ChatGpt om extra uitleg"></button>
-                </a>
-            </pre> 
-        </li>
-        ...
-    </ol>
-
-    het kan ook voorkomen dat er meerdere blokken onder 1 titel staan
-
-    <ol>
-        ...
-        <li>
-            <h3>titel</h3>
-            <p>eenvoudige beschrijving</p>
-            <pre class='code-content is-open'>
-                <code class="language-javascript"></code>
-                <button class="expcol-button" onclick='toggleCode(this);' title="Klap open">▼</button>
-                <button class="copy-button" onclick="copyText(this)" title="Kopieer naar Klembord">&#x1F4CB;</button>
-                <a>
-                    <button class="askchat-button" title="Vraag ChatGpt om extra uitleg"></button>
-                </a>
-            </pre> 
-
-            <p>uitdieping</p>
-            <pre class='code-content is-open default_collapsed'>
-                <code class="language-javascript"></code>
-                <button class="expcol-button" onclick='toggleCode(this);' title="Klap open">▼</button>
-                <button class="copy-button" onclick="copyText(this)" title="Kopieer naar Klembord">&#x1F4CB;</button>
-                <a>
-                    <button class="askchat-button" title="Vraag ChatGpt om extra uitleg"></button>
-                </a>
-            </pre> 
-        </li>
-        ...
-    </ol>
-
-    -->
 
     <ol>
         <li>
@@ -435,20 +395,21 @@
                 definieert wat voor soort attributen (eigenschappen) en methods (handelingen) een ding zal hebben. Een
                 <strong>Object</strong> is een tastbaar exemplaar van die blauwdruk. Je maakt een object met het
                 trefwoord
-                <code class="language-javascript">new</code>.
+                <code class="language-php">new</code>.
             </p>
 
-            <pre class='code-content is-open'><code class="language-javascript">class Auto { // De Blauwdruk (Class)
-    constructor(kleur) {
-        this.kleur = kleur; // Attribuut
-    }
-    rijden() { // Method
-        return `De ${this.kleur}e auto rijdt.`;
+            <pre class='code-content is-open'><code class="language-php">&lt;?php
+class Auto {
+    public function __construct(private string $kleur) {}
+
+    public function rijden(): string {
+        return "De {$this-&gt;kleur}e auto rijdt.";
     }
 }
 
-const mijnAuto = new Auto("rood"); // Het exemplaar (Object)
-console.log(mijnAuto.rijden()); // Output: De rode auto rijdt.</code></pre>
+$mijnAuto = new Auto("rood");
+echo $mijnAuto-&gt;rijden(); // Output: De rode auto rijdt.
+?&gt;</code></pre>
 
         </li>
         <li>
@@ -461,335 +422,389 @@ console.log(mijnAuto.rijden()); // Output: De rode auto rijdt.</code></pre>
                 uitvoeren (bijvoorbeeld starten of stoppen).</p>
 
 
-            <pre class='code-content is-open'><code class="language-javascript">class Lamp {
-    #isAan = false; // Attribuut: toestand van de lamp
+            <pre class='code-content is-open'><code class="language-php">&lt;?php
+class Lamp {
+    private bool $isAan = false; // Attribuut: toestand van de lamp
 
-    zetAan() { // Method: handeling om de toestand te veranderen
-        this.#isAan = true;
+    public function zetAan(): void {
+        $this-&gt;isAan = true;
     }
-    getStatus() {
-        return this.#isAan ? "Aan" : "Uit";
+
+    public function getStatus(): string {
+        return $this-&gt;isAan ? 'Aan' : 'Uit';
     }
 }
 
-const halLamp = new Lamp();
-halLamp.zetAan();
-console.log(halLamp.getStatus()); // Output: Aan</code></pre>
+$halLamp = new Lamp();
+$halLamp-&gt;zetAan();
+echo $halLamp-&gt;getStatus(); // Output: Aan
+?&gt;</code></pre>
 
             <p><strong>Uitbreiding :</strong>
                 De waarde van een attributen kan je uitlezen en wijzigen
-                op 2 manieren : getter/setter-methods (zoals het voorbeeld hierboven) of <strong>accessor properties</strong> (
-                <code class="language-javascript">get</code> en <code class="language-javascript">set</code> sleutelwoorden).
+                op 2 manieren : getter/setter-methods (zoals het voorbeeld hierboven) of <strong>property hooks</strong>
+                (
+                <code class="language-php">get</code> en <code class="language-php">set</code> sleutelwoorden).
             </p>
 
-            <pre class='code-content is-open default_collapsed'><code class="language-javascript">class Thermometer {
-    // 1. Het private (interne) attribuut
-    #temperatuur = 0; 
+            <pre class='code-content is-open default_collapsed'><code class="language-php">&lt;?php
+class Thermometer
+{
+    // Private backing property
+    private float $temperatuur = 0.0;
 
-    // 2. Getter: Wordt uitgevoerd wanneer je 'mijnThermometer.celsius' leest.
-    get celsius() {
-        console.log("--> Getter uitgevoerd: waarde wordt gelezen.");
-        return this.#temperatuur;
-    }
-
-    // 3. Setter: Wordt uitgevoerd wanneer je 'mijnThermometer.celsius = 25' schrijft.
-    set celsius(nieuweTemperatuur) {
-        if (nieuweTemperatuur < -273) {
-            console.error("Fout: Temperatuur kan niet onder het absolute nulpunt komen.");
-            return; // Stopt de toewijzing
+    public float $celsius {
+        // Get‑hook — wordt uitgevoerd bij lezen
+        get {
+            echo "--&gt; Getter uitgevoerd: waarde wordt gelezen.\n";
+            return $this-&gt;temperatuur;
         }
-        console.log("--> Setter uitgevoerd: waarde wordt gevalideerd en gewijzigd.");
-        this.#temperatuur = nieuweTemperatuur;
+        // Set‑hook — wordt uitgevoerd bij schrijven
+        set (float $value) {
+            if ($value &lt; -273.0) {
+                echo "Fout: Temperatuur kan niet onder het absolute nulpunt komen.\n";
+                return;
+            }
+            echo "--&gt; Setter uitgevoerd: waarde wordt gevalideerd en gewijzigd.\n";
+            $this-&gt;temperatuur = $value;
+        }
     }
 
-    // Een berekende getter is ook mogelijk
-    get fahrenheit() {
-        return (this.#temperatuur * 9/5) + 32;
+    public float $fahrenheit {
+        // Alleen een get‑hook — deze property wordt berekend op basis van $temperatuur
+        get => ($this-&gt;temperatuur * 9/5) + 32;
     }
 }
 
-const mijnThermometer = new Thermometer();
+// Voorbeeldgebruik
+$mijnThermometer = new Thermometer();
 
-// Gebruik als een normale property (roept de SETTER op)
-mijnThermometer.celsius = 20; 
+// Gebruik als normale property (roept de set hook op)
+$mijnThermometer-&gt;celsius = 20.0;
 
-// Gebruik als een normale property (roept de GETTER op)
-console.log(`De temperatuur is nu ${mijnThermometer.celsius}°C.`);
+// Gebruik als normale property (roept de get hook op)
+echo "De temperatuur is nu " . $mijnThermometer-&gt;celsius . "°C.\n";
 
-// De berekende property (roept de GETTER op)
-console.log(`Dat is ${mijnThermometer.fahrenheit}°F.`); 
+// Berekende property
+echo "Dat is " . $mijnThermometer-&gt;fahrenheit . "°F.\n";
 
-// Test de validatie (roept de SETTER op, maar deze mislukt)
-mijnThermometer.celsius = -300; </code></pre>
+// Test validatie: deze zal niet worden geaccepteerd
+$mijnThermometer-&gt;celsius = -300.0;           
+?&gt; </code></pre>
 
         </li>
         <li>
             <h3>Encapsulation (Inkapseling)</h3>
-            <p><strong>Eenvoudige Beschrijving:</strong> Encapsulation beschermt de interne data van een object door de
-                attributen "private" te maken (<code class="language-javascript">#</code> in JavaScript). Dit zorgt
-                ervoor
-                dat
-                de attributen niet direct van
-                buitenaf aangepast kunnen worden, wat foutieve waarden voorkomt. Je gebruikt methods om de data
-                gecontroleerd te
-                lezen of te wijzigen.</p>
+            <p><strong>Eenvoudige Beschrijving:</strong> Encapsulation zorgt dat de interne data
+                van een object
+                beschermd wordt. Dit betekent dat je niet zomaar de attributen van een object van buitenaf kunt
+                wijzigen. In PHP doe
+                je dit door de visibiliteit van attributen te beperken met <code class="language-php">private</code> of
+                <code class="language-php">protected</code> en gecontroleerde
+                toegang te geven via methods (getters en setters). Wens je geen beperking van de zichtbaarheid dan
+                gebruik je <code class="language-php">public</code>.
 
-            <pre class='code-content is-open'><code class="language-javascript">class KlantAccount {
-    #saldo = 0; // Private Attribuut (#)
+            <ul class="nosymbol">
+                <li><code class="language-php">public</code> : zichtbaar buiten klasse</li>
+                <li><code class="language-php">private</code> : niet zichtbaar buiten klasse</li>
+                <li><code class="language-php">protected</code> : niet zichtbaar buiten klasse, maar wél in de afgeleide
+                    klasses</li>
+            </ul>
 
-    stort(bedrag) {
-        if (bedrag > 0) { // Gecontroleerde toegang
-            this.#saldo += bedrag;
+            </p>
+            <pre class='code-content is-open'><code class="language-php">&lt;?php
+class KlantAccount {
+    private int $saldo = 0; // Private Attribuut
+
+    public function stort(int $bedrag): void {
+        if ($bedrag > 0) {
+            $this-&gt;saldo += $bedrag;
         }
     }
 
-    getSaldo() { // Public Method voor lezen
-        return this.#saldo;
+    public function getSaldo(): int {
+        return $this-&gt;saldo;
     }
 }
 
-const account = new KlantAccount();
-// account.#saldo = 1000; // Dit veroorzaakt een fout
-account.stort(200);
-console.log(account.getSaldo()); // Output: 200 </code></pre>
+$account = new KlantAccount();
+$account-&gt;stort(200);
+echo $account-&gt;getSaldo(); // Output: 200
+?&gt;</code></pre>
+
+            <p>
+                Bekijk het voorbeeld hieronder voor wat extra uitleg over <code class="language-php">protected</code>
+            </p>
+            <pre class='code-content is-open default_collapsed'><code class="language-php">&lt;?php
+class KlantAccount {
+    private int $saldo = 0;      // Private attribuut: alleen toegankelijk binnen deze class
+    protected int $bonus = 0;    // Protected attribuut: toegankelijk binnen deze class en subclasses
+
+    // Methode om geld te storten
+    public function stort(int $bedrag): void {
+        if ($bedrag > 0) {
+            $this-&gt;saldo += $bedrag;
+            // Bonus verhogen bij storting
+            $this-&gt;bonus += intval($bedrag * 0.05); // 5% bonus
+        }
+    }
+
+    // Getter voor saldo
+    public function getSaldo(): int {
+        return $this-&gt;saldo;
+    }
+
+    // Getter voor bonus
+    public function getBonus(): int {
+        return $this-&gt;bonus;
+    }
+}
+
+// Subclass die protected attribuut kan gebruiken
+class PremiumKlantAccount extends KlantAccount {
+
+    public function gebruikBonus(int $bedrag): void {
+        if ($bedrag &lt;= $this-&gt;bonus) {
+            echo "Bonus gebruikt: {$bedrag}\n";
+            $this-&gt;bonus -= $bedrag;
+            $this-&gt;stort($bedrag); // bedrag toevoegen aan saldo
+        } else {
+            echo "Niet genoeg bonus beschikbaar.\n";
+        }
+    }
+
+    public function toonBonus(): void {
+        echo "Huidige bonus: {$this-&gt;bonus}\n";
+    }
+}
+
+// Voorbeeldgebruik
+$account = new KlantAccount();
+$account-&gt;stort(200);
+echo "Saldo normaal account: " . $account-&gt;getSaldo() . "\n"; // 200
+echo "Bonus normaal account: " . $account-&gt;getBonus() . "\n"; // 10
+
+$premium = new PremiumKlantAccount();
+$premium-&gt;stort(500);
+echo "Saldo premium account: " . $premium-&gt;getSaldo() . "\n"; // 500
+$premium-&gt;toonBonus(); // 25
+$premium-&gt;gebruikBonus(20);
+echo "Saldo premium na bonus: " . $premium-&gt;getSaldo() . "\n"; // 520
+$premium-&gt;toonBonus(); // 5
+
+// $premium-&gt;bonus = 100; // FOUT: protected, kan niet van buitenaf worden aangepast
+?&gt;
+</code></pre>
 
         </li>
         <li>
             <h3>Constructor</h3>
-            <p><strong>Eenvoudige Beschrijving:</strong> De <code class="language-javascript">constructor</code> is de speciale method die automatisch wordt
-                uitgevoerd
-                wanneer een object wordt aangemaakt (bij <code class="language-javascript">new</code>). Het wordt
-                gebruikt
-                om de
-                beginwaarden (attributen)
+            <p><strong>Eenvoudige Beschrijving:</strong> De constructor is de speciale method (<code
+                    class="language-php">__construct()</code>) die automatisch wordt
+                uitgevoerd wanneer een object wordt aangemaakt (met <code class="language-php">new</code>). Het wordt
+                gebruikt om de beginwaarden
+                (attributen)
                 van het nieuwe object in te stellen.</p>
-            <pre class='code-content is-open'><code class="language-javascript">class Product {
-    #naam; 
-
-    // Constructor initialiseert het attribuut bij het aanmaken
-    constructor(productNaam) {
-        this.#naam = productNaam;
-        console.log(`Product ${this.#naam} is aangemaakt.`);
+            <pre class='code-content is-open'><code class="language-php">&lt;?php
+class Product {
+    public function __construct(private string $naam) {
+        echo "Product {$this-&gt;naam} is aangemaakt.";
     }
 
-    getNaam() {
-        return this.#naam;
+    public function getNaam(): string {
+        return $this-&gt;naam;
     }
 }
 
-const melk = new Product("Melk"); // De constructor wordt nu uitgevoerd
-// Output: Product Melk is aangemaakt. </code></pre>
+$melk = new Product("Melk");
+?&gt;</code></pre>
 
         </li>
         <li>
             <h3>Composition (Compositie)</h3>
             <p><strong>Eenvoudige Beschrijving:</strong> Composition is de <strong>"heeft een"</strong> relatie tussen
-                classes.
-                Een class
-                gebruikt een object van een andere class als een van zijn eigen attributen. Bijvoorbeeld: een auto heeft
+                classes. Een class gebruikt een object van een andere class als een van zijn eigen attributen.
+                Bijvoorbeeld: een auto heeft
                 een motor.</p>
-            <pre class='code-content is-open'><code class="language-javascript">class Motor {
-    start() {
+            <pre class='code-content is-open'><code class="language-php">&lt;?php
+class Motor {
+    public function start(): string {
         return "Motor gestart.";
     }
 }
 
 class AutoMetMotor {
-    constructor() {
-        // Compositie: Auto 'heeft een' Motor object als attribuut
-        this.motor = new Motor(); 
+    private Motor $motor;
+
+    public function __construct() {
+        $this-&gt;motor = new Motor();
     }
 
-    rij() {
-        return "Auto rijdt. " + this.motor.start();
+    public function rij(): string {
+        return "Auto rijdt. " . $this-&gt;motor-&gt;start();
     }
 }
 
-const mijnWagen = new AutoMetMotor();
-console.log(mijnWagen.rij()); // Output: Auto rijdt. Motor gestart. </code></pre>
+$mijnWagen = new AutoMetMotor();
+echo $mijnWagen-&gt;rij(); // Output: Auto rijdt. Motor gestart.
+?&gt;</code></pre>
 
         </li>
         <li>
             <h3>Inheritance (Overerving)</h3>
             <p><strong>Eenvoudige Beschrijving:</strong> Inheritance is de <strong>"is een"</strong> relatie. Een nieuwe
-                class
-                (Derived Class)
-                neemt alle attributen en methods van een bestaande class (Base Class) over met het trefwoord
-                <code class="language-javascript">extends</code>. Dit bevordert herbruikbaarheid. De constructor van de
-                Base
-                Class roep je aan met
-                <code class="language-javascript">super()</code>.
+                class (Derived Class) neemt alle attributen en methods van een bestaande class (Base Class) over met
+                het woord <code class="language-php">extends</code>.
+                Dit bevordert herbruikbaarheid.
             </p>
-            <pre class='code-content is-open'><code class="language-javascript">class Vervoermiddel { // Base Class
-    verplaats() {
+            <pre class='code-content is-open'><code class="language-php">&lt;?php
+
+class Vervoermiddel   // Base Class (superclass)
+{
+    public function verplaats(): string
+    {
         return "Het middel beweegt.";
     }
 }
 
-class Fiets extends Vervoermiddel { // Derived Class (is een Vervoermiddel)
-    bel() {
+class Fiets extends Vervoermiddel   // Derived Class (subclass)
+{
+    public function bel(): string
+    {
         return "Ring ring!";
     }
 }
 
-const stadsfiets = new Fiets();
-console.log(stadsfiets.verplaats()); // Geërfde method
-console.log(stadsfiets.bel());      // Eigen method
-// Output: Het middel beweegt. </code></pre>
+$stadsfiets = new Fiets();
 
-            <p>wat uitgebreider :</p> 
-            <pre class='code-content is-open default_collapsed'><code class="language-javascript">// --- 1. Base Class (Vervoermiddel) ---
+echo $stadsfiets->verplaats(); // Geërfde method
+echo $stadsfiets->bel();       // Eigen method
+
+// Output:
+// Het middel beweegt.
+// Ring ring!
+?&gt;</code></pre>
+
+            <p>De constructor van de Base Class roep je aan met <code class="language-php">parent::__construct()</code>:</p>
+            <pre class='code-content is-open default_collapsed'><code class="language-php">&lt;?php
 class Vervoermiddel {
-    // Gemeenschappelijke private attributen
-    #merk;
-    #maxSnelheid;
+    protected string $merk;
+    protected int $maxSnelheid;
 
-    constructor(merk, maxSnelheid) {
-        // Initialiseert de geërfde attributen
-        this.#merk = merk;
-        this.#maxSnelheid = maxSnelheid;
+    public function __construct(string $merk = '', int $maxSnelheid = 0) {
+        $this-&gt;merk = $merk;
+        $this-&gt;maxSnelheid = $maxSnelheid;
     }
 
-    verplaats() {
-        // Gemeenschappelijke method
-        return `Het ${this.#merk} verplaatst zich.`;
+    public function verplaats(): string {
+        return "Het middel beweegt.";
     }
 }
 
-// --- 2. Derived Class (Fiets) ---
-// Gebruikt 'extends' om de attributen en methods van Vervoermiddel over te erven
 class Fiets extends Vervoermiddel {
-    #aantalVersnellingen; // Extra attribuut, uniek voor Fiets
+    private int $aantalVersnellingen;
 
-    constructor(merk, maxSnelheid, aantalVersnellingen) {
-        // WERKING VAN super():
-        // 1. super() MOET als eerste worden aangeroepen in de constructor van de Derived Class.
-        // 2. Het roept de constructor van Vervoermiddel op en geeft de parameters 'merk' en 'maxSnelheid' door.
-        // 3. Dit initialiseert de geërfde attributen in de Base Class.
-        super(merk, maxSnelheid); 
-        
-        // 4. Hierna wordt het unieke attribuut van de Fiets class geïnitialiseerd.
-        this.#aantalVersnellingen = aantalVersnellingen;
+    public function __construct(string $merk, int $maxSnelheid, int $aantalVersnellingen) {
+        parent::__construct($merk, $maxSnelheid);
+        $this-&gt;aantalVersnellingen = $aantalVersnellingen;
     }
 
-    bel() {
-        // Unieke method voor Fiets
-        return "Ring ring! De fiets belde.";
+    public function bel(): string {
+        return "Ring ring!";
     }
 
-    getInfo() {
-        return `Dit is een ${this.constructor.name} van merk ${this.verplaats().split(' ')[1]}. Aantal versnellingen: ${this.#aantalVersnellingen}.`;
+    public function getInfo(): string {
+        return "Dit is een " . static::class . " van merk {$this-&gt;merk}. Aantal versnellingen: {$this-&gt;aantalVersnellingen}.";
     }
 }
 
-// --- 3. Gebruik van het geërfde object ---
-const stadsfiets = new Fiets("Gazelle", 35, 7);
-
-// Gebruikt de geërfde method van de Base Class (Vervoermiddel)
-console.log(stadsfiets.verplaats()); 
-
-// Gebruikt de unieke method van de Derived Class (Fiets)
-console.log(stadsfiets.bel()); 
-
-// Toont geërfde en unieke attributen
-console.log(stadsfiets.getInfo());
-
-/*
-Output:
-Het Gazelle verplaatst zich.
-Ring ring! De fiets belde.
-Dit is een Fiets van merk Gazelle. Aantal versnellingen: 7.
-*/
-	 </code></pre>
+$stadsfiets = new Fiets("Gazelle", 35, 7);
+echo $stadsfiets-&gt;verplaats();
+echo $stadsfiets-&gt;bel();
+echo $stadsfiets-&gt;getInfo();
+?&gt;</code></pre>
 
 
         </li>
         <li>
             <h3>Method Overriding (Method Overschrijven)</h3>
             <p><strong>Eenvoudige Beschrijving:</strong> Dit is het aanpassen van een geërfde method in de Derived
-                Class. U
-                geeft de method een andere of uitgebreide functionaliteit. U kunt de oorspronkelijke method van de Base
-                Class
-                oproepen binnen de nieuwe method met <code class="language-javascript">super.methodNaam()</code>.</p>
-            <pre class='code-content is-open'><code class="language-javascript">class Dier {
-    geluid() {
+                Class. U geeft de method een andere of uitgebreide functionaliteit. U kunt de oorspronkelijke method van
+                de Base
+                Class oproepen binnen de nieuwe method met <code class="language-php">parent::__construct()</code>.</p>
+            <pre class='code-content is-open'><code class="language-php">&lt;?php
+class Dier {
+    public function geluid(): string {
         return "Maakt een basisgeluid.";
     }
 }
 
 class Kat extends Dier {
-    // Overschrijven van de geluid method
-    geluid() {
-        // Roep de Base Class method op en voeg extra info toe
-        return `${super.geluid()} Maar de Kat zegt 'Miau'.`;
+    public function geluid(): string {
+        return parent::geluid() . " Maar de Kat zegt 'Miau'.";
     }
 }
 
-const poes = new Kat();
-console.log(poes.geluid()); 
-// Output: Maakt een basisgeluid. Maar de Kat zegt 'Miau'. </code></pre>
+$poes = new Kat();
+echo $poes-&gt;geluid();
+?&gt;</code></pre>
 
         </li>
         <li>
             <h3>Polymorfisme</h3>
             <p><strong>Eenvoudige Beschrijving:</strong> Polymorfisme betekent "vele vormen". Het verwijst naar het feit
-                dat
-                eenzelfde method (met dezelfde naam) in verschillende classes bestaat, maar telkens een andere actie
-                uitvoert.
-                Dit is handig wanneer je objecten van verschillende types in een lijst behandelt.</p>
-            <pre class='code-content is-open'><code class="language-javascript">class Figuur {
-    teken() {
+                dat eenzelfde method (met dezelfde naam) in verschillende classes bestaat, maar telkens een andere actie
+                uitvoert. Dit is handig wanneer je objecten van verschillende types in een lijst behandelt.</p>
+            <pre class='code-content is-open'><code class="language-php">&lt;?php
+class Figuur {
+    public function teken(): string {
         return "Een figuur wordt getekend.";
     }
 }
 
 class Cirkel extends Figuur {
-    teken() {
+    public function teken(): string {
         return "Een ronde vorm wordt getekend.";
     }
 }
 
 class Vierkant extends Figuur {
-    teken() {
+    public function teken(): string {
         return "Een vierkant met rechte hoeken wordt getekend.";
     }
 }
 
-const objecten = [new Cirkel(), new Vierkant()];
-
-// Polymorfisme: dezelfde oproep 'teken()' heeft verschillende resultaten
-for (const obj of objecten) {
-    console.log(obj.teken());
+$objecten = [new Cirkel(), new Vierkant()];
+foreach ($objecten as $obj) {
+    echo $obj-&gt;teken();
 }
-// Output: Een ronde vorm wordt getekend.
-// Output: Een vierkant met rechte hoeken wordt getekend. </code></pre>
+?&gt;</code></pre>
 
         </li>
         <li>
             <h3>Static</h3>
             <p><strong>Eenvoudige Beschrijving:</strong> Static attributen of methods zijn Class-eigenschappen, en dus
-                geen
-                object-eigenschappen. Alle objecten delen dezelfde static waarde. Je roept een static method aan via de
-                naam
-                van de Class, niet via een object.</p>
-            <pre class='code-content is-open'><code class="language-javascript">class Teller {
-    static #gemaakteObjecten = 0; // Static attribuut
+                geen object-eigenschappen. Alle objecten delen dezelfde static waarde. Je roept een static method aan
+                via de
+                naam van de Class, niet via een object.</p>
+            <pre class='code-content is-open'><code class="language-php">&lt;?php
+class Teller {
+    private static int $gemaakteObjecten = 0;
 
-    constructor() {
-        // Verhoog de static waarde via de Classnaam
-        Teller.#gemaakteObjecten++; 
+    public function __construct() {
+        self::$gemaakteObjecten++;
     }
 
-    static getTotaalAantalTellers() { // Static method
-        return Teller.#gemaakteObjecten;
+    public static function getTotaalAantalTellers(): int {
+        return self::$gemaakteObjecten;
     }
 }
 
-let item1 = new Teller();
-let item2 = new Teller();
+$item1 = new Teller();
+$item2 = new Teller();
 
-// Roep static method op via Classnaam
-console.log(Teller.getTotaalAantalTellers()); // Output: 2 </code></pre>
+echo Teller::getTotaalAantalTellers(); // Output: 2
+?&gt;</code></pre>
 
         </li>
     </ol>
