@@ -156,6 +156,7 @@
             background-repeat: no-repeat;
             background-position-x: center;
             background-position-y: center;
+            filter: brightness(0) saturate(100%);
         }
 
 
@@ -170,6 +171,7 @@
         .askchat-button:hover {
             background-color: rgba(0, 0, 0, 0.2);
 
+            /*filter: invert(48%) sepia(79%) saturate(2476%) hue-rotate(86deg) brightness(118%) contrast(119%);*/
         }
 
         button {
@@ -685,7 +687,8 @@ echo $stadsfiets->bel();       // Eigen method
 // Ring ring!
 ?&gt;</code></pre>
 
-            <p>De constructor van de Base Class roep je aan met <code class="language-php">parent::__construct()</code>:</p>
+            <p>De constructor van de Base Class roep je aan met <code class="language-php">parent::__construct()</code>:
+            </p>
             <pre class='code-content is-open default_collapsed'><code class="language-php">&lt;?php
 class Vervoermiddel {
     protected string $merk;
