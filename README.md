@@ -4,8 +4,8 @@ Compact, interactive HTML cheatsheets explaining core Object-Oriented Programmin
 
 **Files**
 
-- [https://jdetaver.github.io/OOP-cheatsheet/cheatsheet-js.html](cheatsheet-js.html): OOP cheatsheet with JavaScript examples. Open directly in your browser.
-- [https://jdetaver.github.io/OOP-cheatsheet/cheatsheet-php.html](cheatsheet-php.html): OOP cheatsheet with PHP examples. Also standalone — open directly in your browser.
+- [cheatsheet-js.html](https://jdetaver.github.io/OOP-cheatsheet/cheatsheet-js.html): OOP cheatsheet with JavaScript examples. Open directly in your browser.
+- [cheatsheet-php.html](https://jdetaver.github.io/OOP-cheatsheet/cheatsheet-php.html): OOP cheatsheet with PHP examples. Also standalone — open directly in your browser.
 
 **Standalone usage**
 
